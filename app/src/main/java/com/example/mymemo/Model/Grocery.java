@@ -3,7 +3,7 @@ package com.example.mymemo.Model;
 public class Grocery {
     private String name;
     private String quantity;
-    private String dataItemAdded;
+    private String dateItemAdded;
     private int id;
 
     public Grocery() {
@@ -13,7 +13,7 @@ public class Grocery {
     public Grocery(String name, String quantity, String dataItemAdded, int id) {
         this.name = name;
         this.quantity = quantity;
-        this.dataItemAdded = dataItemAdded;
+        this.dateItemAdded = dateItemAdded;
         this.id = id;
     }
 
@@ -34,11 +34,11 @@ public class Grocery {
     }
 
     public String getDataItemAdded() {
-        return dataItemAdded;
+        return dateItemAdded;
     }
 
     public void setDataItemAdded(String dataItemAdded) {
-        this.dataItemAdded = dataItemAdded;
+        this.dateItemAdded = dataItemAdded;
     }
 
     public int getId() {
