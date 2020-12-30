@@ -2,13 +2,17 @@ package com.example.mymemo.Activities;
 
 import android.os.Bundle;
 
+import com.example.mymemo.Data.DatabaseHandler;
+import com.example.mymemo.Model.Grocery;
 import com.example.mymemo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -23,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText groceryItem;
     private EditText quantity;
     private Button saveButton;
+    private DatabaseHandler db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHandler(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,12 +85,31 @@ public class MainActivity extends AppCompatActivity {
                 //1. save to database
                 //2. go to next screen
 
-                saveGroceryToDB(v);
+                if (!groceryItem.getText().toString().isEmpty() && !quantity.getText().toString().isEmpty()){
+                    saveGroceryToDB(v);
+                }
             }
         });
     }
 
     private void saveGroceryToDB(View v){
+
+        Grocery grocery = new Grocery();
+        String newGrocery = groceryItem.getText().toString();
+        String newQty = quantity.getText().toString();
+
+        grocery.setName(newGrocery);
+        grocery.setQuantity(newQty);
+
+        //add to database
+        db.addItem(grocery);
+
+        Snackbar.make(v, "SAVED!", Snackbar.LENGTH_LONG).show();
+
+        Log.d("Item Added ID ", String.valueOf(db.countItems()));
+
+
+
 
     }
 }

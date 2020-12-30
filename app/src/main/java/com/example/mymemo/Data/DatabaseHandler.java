@@ -44,7 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //BUILD CRUD
 
-    public void AddItem(Grocery grocery){
+    public void addItem(Grocery grocery){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -53,7 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Constants.KEY_DATE, java.lang.System.currentTimeMillis());
 
         db.insert(Constants.TABLE_NAME, null, values);
-        Log.d("Save!!", "Save to Database");
+        Log.d("Save!!", "Saved to the Database");
 
     }
 
