@@ -80,6 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             editButton.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
 
+
         }
 
         @Override

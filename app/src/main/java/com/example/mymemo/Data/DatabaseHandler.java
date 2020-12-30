@@ -93,24 +93,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 null, null, null, null,
                 Constants.KEY_DATE + " DESC");
 
-        if (cursor != null){
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()){
+            do{
+                Grocery grocery = new Grocery();
+                grocery.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.KEY_ID))));
+                grocery.setName(cursor.getString(cursor.getColumnIndex(Constants.KEY_ITEM_NAME)));
+                grocery.setQuantity(cursor.getString(cursor.getColumnIndex(Constants.KEY_QTY)));
+
+                java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance();
+                String formatedDate = dateFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(Constants.KEY_DATE))).getTime());
+
+                grocery.setDataItemAdded(formatedDate);
+
+                //add to the list
+                groceryList.add(grocery);
+            } while(cursor.moveToNext());
         }
 
-        while(cursor.moveToNext()){
-            Grocery grocery = new Grocery();
-            grocery.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Constants.KEY_ID))));
-            grocery.setName(cursor.getString(cursor.getColumnIndex(Constants.KEY_ITEM_NAME)));
-            grocery.setQuantity(cursor.getString(cursor.getColumnIndex(Constants.KEY_QTY)));
-
-            java.text.DateFormat dateFormat = java.text.DateFormat.getDateInstance();
-            String formatedDate = dateFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(Constants.KEY_DATE))).getTime());
-
-            grocery.setDataItemAdded(formatedDate);
-
-            //add to the list
-            groceryList.add(grocery);
-        }
         return groceryList;
     }
 

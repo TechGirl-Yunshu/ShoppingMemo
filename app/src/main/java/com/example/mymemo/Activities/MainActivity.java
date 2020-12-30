@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
 
     }
+
     public void byPassActivity() {
         if (db.countItems() > 0 ){
             startActivity(new Intent(MainActivity.this, ListActivity.class));

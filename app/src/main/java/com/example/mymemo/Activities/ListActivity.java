@@ -1,5 +1,6 @@
 package com.example.mymemo.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mymemo.Data.DatabaseHandler;
@@ -8,13 +9,17 @@ import com.example.mymemo.UI.RecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.mymemo.R;
 
@@ -29,6 +34,12 @@ public class ListActivity extends AppCompatActivity {
     private List<Grocery> listItems;
     private DatabaseHandler db;
 
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private EditText groceryItem;
+    private EditText quantity;
+    private Button saveButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +51,7 @@ public class ListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                createPopupDialog();
             }
         });
 
@@ -68,6 +79,54 @@ public class ListActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, listItems);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
+
+    }
+
+    private void createPopupDialog(){
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.popup, null);
+        groceryItem = (EditText) view.findViewById(R.id.groceryItem);
+        quantity = (EditText) view.findViewById(R.id.groceryQty);
+        saveButton = (Button) view.findViewById(R.id.saveButton);
+
+        dialogBuilder.setView(view);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        saveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                if (!groceryItem.getText().toString().isEmpty() && !quantity.getText().toString().isEmpty()){
+                    saveGroceryToDB(v);
+                }
+            }
+        });
+    }
+
+    private void saveGroceryToDB(View v){
+
+        Grocery grocery = new Grocery();
+        String newGrocery = groceryItem.getText().toString();
+        String newQty = quantity.getText().toString();
+
+        grocery.setName(newGrocery);
+        grocery.setQuantity(newQty);
+
+        //add to database
+        db.addItem(grocery);
+        Snackbar.make(v, "SAVED!", Snackbar.LENGTH_LONG).show();
+
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                dialog.dismiss();
+                startActivity(new Intent(ListActivity.this, ListActivity.class));
+                finish();
+            }
+        }, 1000);
 
     }
 }
