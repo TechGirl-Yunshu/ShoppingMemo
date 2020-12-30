@@ -1,5 +1,6 @@
 package com.example.mymemo.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mymemo.Data.DatabaseHandler;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -103,10 +105,16 @@ public class MainActivity extends AppCompatActivity {
 
         //add to database
         db.addItem(grocery);
-
         Snackbar.make(v, "SAVED!", Snackbar.LENGTH_LONG).show();
+        //Log.d("Item Added ID ", String.valueOf(db.countItems()));
 
-        Log.d("Item Added ID ", String.valueOf(db.countItems()));
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                dialog.dismiss();
+                startActivity(new Intent(MainActivity.this, ListActivity.class));
+            }
+        }, 1000);
 
 
 

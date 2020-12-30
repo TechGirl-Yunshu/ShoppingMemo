@@ -58,7 +58,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Grocery getItem (int id){
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.query(Constants.TABLE_NAME,
                 new String[]{Constants.KEY_ID, Constants.KEY_ITEM_NAME, Constants.KEY_QTY, Constants.KEY_DATE },
