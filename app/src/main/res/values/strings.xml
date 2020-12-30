@@ -16,4 +16,7 @@
     <string name="save_title">SAVE</string>
     <string name="title_activity_list">ListActivity</string>
     <string name="title_activity_main2">MainActivity</string>
+    <string name="confirmation_text">Are you sure to delete this item?</string>
+    <string name="no_choice">NO</string>
+    <string name="yes_choice">YES</string>
 </resources>
