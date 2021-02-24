@@ -3,7 +3,7 @@
 
 ## An Android application that helps people making a memo of the shopping list
 
-## App Walk-through
+### App Walk-through
 
 #### Memorize your shopping item by one tap
 
@@ -13,7 +13,7 @@
 
 #### Give you a clear view of what you need to buy. You can delete the items with only one tap while you are shopping, simplifying and speeding up your shopping process
 
-![shoppinglist](https://imgur.com/PB5faMN)
+![shoppinglist](https://media.giphy.com/media/4C7OwDGHlMc9c9bk5N/giphy.gif)
 
 <br/>
 
